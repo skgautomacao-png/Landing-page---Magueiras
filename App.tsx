@@ -6,11 +6,10 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { ShieldCheck, Target, Settings, Zap, Factory, Package, FlaskConical, Car, ChevronRight, Phone, Mail, ArrowRight, X, Menu, Droplets, Gauge } from 'lucide-react';
+import { ShieldCheck, Target, Settings, Zap, Factory, Package, FlaskConical, Car, ChevronRight, Phone, Mail, ArrowRight, X, Menu, Droplets, Gauge, Utensils, Truck, Box } from 'lucide-react';
 import FluidBackground from './components/FluidBackground';
 import GradientText from './components/GlitchText';
 import CustomCursor from './components/CustomCursor';
-import AIChat from './components/AIChat';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import { TechnicalFeature } from './types';
 
@@ -42,6 +41,14 @@ const CATALOG: TechnicalFeature[] = [
   },
 ];
 
+const SECTORS = [
+  { id: 'food', name: 'Alimentos e bebidas', icon: Utensils, desc: 'Soluções higiênicas e resistentes a processos de lavagem.' },
+  { id: 'auto', name: 'Automotiva', icon: Car, desc: 'Alta performance para linhas de montagem e sistemas pneumáticos complexos.' },
+  { id: 'pharma', name: 'Farmacêutica', icon: FlaskConical, desc: 'Materiais certificados para ambientes controlados e pureza extrema.' },
+  { id: 'pkg', name: 'Embalagem', icon: Box, desc: 'Velocidade e precisão para máquinas de envase e empacotamento.' },
+  { id: 'log', name: 'Logística automatizada', icon: Truck, desc: 'Confiabilidade para sistemas de transporte e separação de alta demanda.' },
+];
+
 const App: React.FC = () => {
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
@@ -64,7 +71,6 @@ const App: React.FC = () => {
     <div className="relative min-h-screen text-white selection:bg-[#e31e24] selection:text-white cursor-auto md:cursor-none overflow-x-hidden bg-[#0a0b1e]">
       <CustomCursor />
       <FluidBackground />
-      <AIChat />
       <WhatsAppWidget />
       
       {/* Navigation */}
@@ -78,7 +84,7 @@ const App: React.FC = () => {
         </div>
         
         <div className="hidden md:flex gap-10 text-[10px] font-bold tracking-[0.3em] uppercase">
-          {['Catálogo', 'Benefícios', 'Setores', 'Contato'].map((item) => (
+          {['Catálogo', 'Setores', 'Benefícios', 'Contato'].map((item) => (
             <button 
               key={item} 
               onClick={() => scrollToSection(item.toLowerCase())}
@@ -223,6 +229,33 @@ const App: React.FC = () => {
         </div>
       </section>
 
+      {/* SECTORS SECTION */}
+      <section id="setores" className="relative z-10 py-32 bg-white/5 backdrop-blur-sm border-y border-white/10">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-20">
+            <h2 className="text-2xl md:text-4xl font-heading font-bold uppercase text-white mb-6">Setores de Atuação</h2>
+            <div className="w-20 h-1 bg-red-600 mx-auto" />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+            {SECTORS.map((sector) => (
+              <motion.div 
+                key={sector.id}
+                whileHover={{ y: -10 }}
+                className="p-8 bg-black/40 border border-white/10 rounded-2xl hover:border-green-500/50 transition-all flex flex-col items-center text-center group"
+                data-hover="true"
+              >
+                <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-6 group-hover:bg-red-600/20 transition-colors">
+                  <sector.icon className="w-8 h-8 text-green-500 group-hover:text-red-500 transition-colors" />
+                </div>
+                <h3 className="text-sm font-heading font-bold uppercase text-white mb-4 leading-tight">{sector.name}</h3>
+                <p className="text-xs text-gray-500 leading-relaxed">{sector.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CONTACT SECTION */}
       <section id="contato" className="relative z-10 py-32 px-6">
         <div className="max-w-5xl mx-auto">
@@ -242,7 +275,7 @@ const App: React.FC = () => {
                 
                 <div className="flex-1">
                    <h3 className="text-2xl md:text-3xl font-heading font-bold mb-4 text-white uppercase tracking-tight leading-tight">
-                     Fale com nossa Engenharia
+                     Fale com nossos Consultores
                    </h3>
                    <p className="text-gray-400 max-w-2xl text-base md:text-lg font-light leading-relaxed">
                      Analise sua planta industrial agora com especialistas em transcodificação Camozzi e mangueiras técnicas. 
@@ -256,7 +289,7 @@ const App: React.FC = () => {
                   <Mail className="w-4 h-4" /> Solicitar por E-mail
                 </a>
                 <a href="https://wa.me/5511997379588" target="_blank" className="flex-1 py-6 bg-green-600 text-white font-black uppercase tracking-[0.2em] text-xs hover:bg-white hover:text-black transition-all flex items-center justify-center gap-4 group no-underline shadow-lg shadow-green-600/20" data-hover="true">
-                  <Phone className="w-4 h-4" /> WhatsApp Engenharia
+                  <Phone className="w-4 h-4" /> WhatsApp Consultores
                 </a>
              </div>
              
